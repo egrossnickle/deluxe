@@ -1,5 +1,9 @@
-
-;(function ( $, window, document, undefined ) {
+/**
+ * Deluxe is an off-canvas navigation plugin ideal for responsive websites.
+ * @author  Eric Grossnickle
+ * @license MIT
+ */
+;(function ($, window, document, undefined) {
     'use strict';
 
     var pluginName = 'deluxe',
@@ -20,7 +24,7 @@
         },
         hasTouch = 'ontouchstart' in window;
 
-    function Deluxe( element, options ) {
+    function Deluxe(element, options) {
         this.element = element;
 
         this.options = $.extend( {}, defaults, options );
@@ -288,6 +292,10 @@
             }
         },
 
+        /**
+         * Enables touch events for the given element.
+         * @param {element}
+         */
         _enableActionEvents: function(elem) {
             elem.on('touchstart.' + this.options.namespace, $.proxy(this._onStart, this))
                 .on('touchmove.' + this.options.namespace, $.proxy(this._onMove, this))
@@ -295,6 +303,10 @@
                 .on('click.' + this.options.namespace, $.proxy(this._onClick, this));
         },
 
+        /**
+         * Disables touch events for the given element.
+         * @param {element}
+         */
         _disableActionEvents: function(elem) {
             elem.off('touchstart.' + this.options.namespace)
                 .off('touchmove.' + this.options.namespace)
@@ -323,15 +335,10 @@
             this.$header.css('top', 0);
         },
 
-        /**
-         * Event Handlers
-         *
-         * Plugin is manipulated in 2 ways:
-         *   1. Click: 'click' -> 'before' -> {transition} -> 'after'
-         *   2. Touch: 'start' -> 'before' -> 'move' -> 'end' -> {transition} -> 'after'
-         *
-         * 'before' and 'after' events on each click/touch
-         */
+
+        //-------------------------------------------------------------------------
+        // Event Handlers
+        //-------------------------------------------------------------------------
 
         /**
          * The very beginning (before anything happens).
@@ -535,6 +542,9 @@
 
         /**
          * Returns a formatted attribute type.
+         * @param  {string} value The value for the attribute.
+         * @param  {string} style How to format the attribute+value (for HTML or CSS).
+         * @return {string} The formatted attribute.
          */
         _formatAttribute: function(value, style) {
             value = Util.default(value, false);
@@ -675,7 +685,7 @@
 
         /**
          * Checks for vendor-specific property names.
-         * @param {string} prop The property name.
+         * @param  {string} prop The property name.
          * @return {string} The property name, possibly vendor-prefixed.
          */
         _propertyName: function(prop) {
@@ -694,7 +704,7 @@
 
         /**
          * Returns a CSS-style property name, vendor-prefixed if necessary.
-         * @param {string} prop The property name.
+         * @param  {string} prop The property name.
          * @return {string} The property name, possibly vendor-prefixed.
          */
         _cssPropertyName: function(prop) {
@@ -724,8 +734,8 @@
 
         /**
          * Returns a camelCased string to lowercase with dashes before former capital letters.
-         * @author http://github.com/madrobby/zepto/blob/master/src/zepto.js
-         * @param {string} str The target string.
+         * @src    http://github.com/madrobby/zepto/blob/master/src/zepto.js
+         * @param  {string} str The target string.
          * @return {string} The converted string.
          */
         dasherize: function(str) {
@@ -739,8 +749,8 @@
 
         /**
          * Returns a default value for the target variable if it's undefined.
-         * @param {mixed} x The target variable.
-         * @param {mixed} val The default value.
+         * @param  {mixed} x The target variable.
+         * @param  {mixed} val The default value.
          * @return {mixed} The default value.
          */
         default: function(x, val) {
@@ -749,7 +759,7 @@
 
         /**
          * Returns the window height and width or, if specified, just the height or width.
-         * @param {string} specific Use to return just the height or width.
+         * @param  {string} specific Use to return just the height or width.
          * @return {mixed} The window dimensions.
         */
         windowDimensions: function(specific) {
@@ -766,12 +776,12 @@
         }
     };
 
-    $.fn[pluginName] = function ( options ) {
+    $.fn[pluginName] = function (options) {
         return this.each(function () {
             var $this = $(this);
             if (!$this.data('plugin_' + pluginName)) {
                 $this.data('plugin_' + pluginName,
-                    new Deluxe( this, options ));
+                    new Deluxe(this, options));
             }
         });
     }
